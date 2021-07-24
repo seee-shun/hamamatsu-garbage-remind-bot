@@ -7,8 +7,9 @@ const line = require("@line/bot-sdk");
 const PORT = process.env.PORT || 3000;
 
 const config = {
-  channelSecret: process.env.CHANNEL_SECRET,
-  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
+  channelSecret: "356084186cc5e93d0d8f4b1c896b384a",
+  channelAccessToken:
+    "LBuTK2807CaJXrJ4Bkl6YnJ9/uOn/EPseaViFzNjt1ap5CgGy6pJSMwji9aUqQ6a/uDjrk372f8s8DjuvBHg2qAxVHu3vuX54x3oj8ZJEuPEUQVEpqkTmhW3y+G++z5uvymYMRt4tsK+eBKWVq0I4AdB04t89/1O/w1cDnyilFU=",
 };
 
 const app = express();
@@ -76,7 +77,10 @@ const handleEvent = async (e) => {
 //   toMessage();
 // }, new Date().setHours(2, 50, 0, 0) - new Date());
 
+app.listen(port, () =>
+  console.log(`Hamamatsu Garbage remind bot listening on port ${port}!`)
+);
 // app.listen(PORT);
 // console.log(`Sever running at ${PORT}`);
-process.env.NOW_REGION ? (module.exports = app) : app.listen(PORT);
-console.log(`Server running at ${PORT}`);
+// process.env.NOW_REGION ? (module.exports = app) : app.listen(PORT);
+// console.log(`Server running at ${PORT}`);
