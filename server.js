@@ -69,12 +69,12 @@ const getName = async (userId) => {
   console.log(replyText);
   console.log(JSON.stringify(replyText));
   console.log(JSON.parse(replyText));
-  const replyMes = JSON.stringify(replyText);
-  console.log(`replyMesは${replyMes}`);
+  // const replyMes = JSON.stringify(replyText);
+  // console.log(`replyMesは${replyMes}`);
 
   await client.pushMessage(userId, {
     type: "text",
-    text: `君の名前は${replyMes}`,
+    text: `君の名前は${replyText}`,
   });
 };
 // const toMessage = () => {
