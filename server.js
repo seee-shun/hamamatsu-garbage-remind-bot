@@ -63,12 +63,12 @@ const getName = async (userId) => {
     "SELECT * FROM test",
     (err, results) => {
       console.log(results);
-      console.log(results[0].name);
       return results[0].name;
     }
   );
-  console.log(JSON.stringify(replyText));
-  const replyMes = JSON.stringify(replyText);
+  console.log(JSON.parse(replyText));
+  const replyMes = await JSON.parse(replyText);
+  console.log(`replyMesは${replyMes}`);
 
   await client.pushMessage(userId, {
     type: "text",
