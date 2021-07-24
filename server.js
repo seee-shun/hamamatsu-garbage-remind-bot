@@ -39,15 +39,12 @@ const client = new line.Client(config);
 
 const handleEvent = async (e) => {
   let replyText = "";
-  await connection.query("SELECT * FROM test", (err, results) => {
-    replyText = results[0].name;
-  });
   if (e.type !== "message" || e.message.type !== "text") {
     return Promise.resolve(null);
   }
 
   if (e.message.text === "明日のごみは？") {
-    // replyText = "明日はかん、ペットボトルがゴミ出しの日です";
+    replyText = getName();
   } else if (e.message.text === "地域を変更") {
     replyText = "特になし";
   } else if (e.message.text === "通知時間を変更") {
@@ -60,6 +57,11 @@ const handleEvent = async (e) => {
   });
 };
 
+const getName = async () => {
+  await connection.query("SELECT * FROM test", (err, results) => {
+    return results[0].name;
+  });
+};
 // const toMessage = () => {
 //   client.pushMessage("U1221c5a7f6d56970a7dce56d99a5a9ae", {
 //     type: "text",
