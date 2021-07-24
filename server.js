@@ -68,6 +68,7 @@ const getName = async (userId) => {
       return results[0].name;
     }
   );
+  console.log(replyText);
 
   await client.pushMessage(userId, {
     type: "text",
