@@ -67,10 +67,12 @@ const getName = async (userId) => {
       return results[0].name;
     }
   );
+  console.log(JSON.stringify(replyText));
+  const replyMes = JSON.stringify(replyText);
 
   await client.pushMessage(userId, {
     type: "text",
-    text: `君の名前は${JSON.stringify(replyText)}`,
+    text: `君の名前は${replyMes}`,
   });
 };
 // const toMessage = () => {
