@@ -45,7 +45,7 @@ const handleEvent = async (e) => {
 
   if (e.message.text === "明日のごみは？") {
     mes = "ちょっとまってね";
-    getName(e.source.userId);
+    await getName(e.source.userId);
   } else if (e.message.text === "地域を変更") {
     mes = "特になし";
   } else if (e.message.text === "通知時間を変更") {
