@@ -26,8 +26,8 @@ const connection = mysql.createConnection({
 //   }
 //   console.log("success");
 // });
-
-app.get("/", (req, res) => {
+let replyText = "";
+app.get("/webhook", (req, res) => {
   connection.query("SELECT * FROM test", (err, results) => {
     console.log(results[0]);
     console.log(results[0].name);
@@ -47,7 +47,6 @@ app.post("/webhook", line.middleware(config), (req, res) => {
 const client = new line.Client(config);
 
 const handleEvent = async (e) => {
-  let replyText = "";
   if (e.type !== "message" || e.message.type !== "text") {
     return Promise.resolve(null);
   }
