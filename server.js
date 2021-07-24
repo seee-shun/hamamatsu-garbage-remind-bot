@@ -66,8 +66,8 @@ const getName = async (userId) => {
       return results[0].name;
     }
   );
-  console.log(JSON.parse(replyText));
-  const replyMes = await JSON.parse(replyText);
+  await console.log(JSON.stringify(replyText));
+  const replyMes = await JSON.stringify(replyText);
   console.log(`replyMesは${replyMes}`);
 
   await client.pushMessage(userId, {
