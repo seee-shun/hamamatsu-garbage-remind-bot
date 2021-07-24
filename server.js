@@ -32,7 +32,8 @@ app.get("/", (req, res) => res.send("Hello LINE BOT!(GET)")); //ブラウザ確�
 app.post("/webhook", line.middleware(config), (req, res) => {
   console.log(req.body.events);
   Promise.all(req.body.events.map(handleEvent)).then((result) =>
-    res.json(result)
+    // res.json(result)
+    console.log(result)
   );
 });
 
