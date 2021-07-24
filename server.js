@@ -48,19 +48,16 @@ const handleEvent = (e) => {
   if (e.message.text === "明日のごみは？") {
     mes = "ちょっとまってね";
     // return getName(e.source.userId);
-    const replyText = connection.query("SELECT * FROM test", (err, results) => {
+    connection.query("SELECT * FROM test", (err, results) => {
       console.log(results);
-      return results[0].name;
+      return client.pushMessage(e.source.userId, {
+        type: "text",
+        text: results[0].name,
+      });
     });
-    console.log(replyText);
     // console.log(JSON.stringify(replyText));
     // const replyMes = JSON.stringify(replyText);
     // console.log(`replyMesは${replyMes}`);
-
-    return client.pushMessage(e.source.userId, {
-      type: "text",
-      text: `君の名前は${replyText}`,
-    });
   } else if (e.message.text === "地域を変更") {
     mes = "特になし";
   } else if (e.message.text === "通知時間を変更") {
