@@ -31,15 +31,15 @@ connection.connect((err) => {
 app.get("/", (req, res) => res.send("Hello LINE BOT!(GET)")); //ブラウザ確認用(無くても問題ない)
 app.post("/webhook", line.middleware(config), (req, res) => {
   console.log(req.body.events);
-  Promise.all(req.body.events.map(handleEvent)).then((result) =>
-    // res.json(result)
-    console.log(result)
-  );
+  Promise.all(req.body.events.map(handleEvent)).then((result) => {
+    console.log(result);
+    res.json(result);
+  });
 });
 
 const client = new line.Client(config);
 
-const handleEvent = async (e) => {
+const handleEvent = (e) => {
   let mes = "";
   if (e.type !== "message" || e.message.type !== "text") {
     return Promise.resolve(null);
@@ -48,13 +48,10 @@ const handleEvent = async (e) => {
   if (e.message.text === "明日のごみは？") {
     mes = "ちょっとまってね";
     // return getName(e.source.userId);
-    const replyText = await connection.query(
-      "SELECT * FROM test",
-      (err, results) => {
-        console.log(results);
-        return results[0].name;
-      }
-    );
+    const replyText = connection.query("SELECT * FROM test", (err, results) => {
+      console.log(results);
+      return results[0].name;
+    });
     console.log(replyText);
     // console.log(JSON.stringify(replyText));
     // const replyMes = JSON.stringify(replyText);
