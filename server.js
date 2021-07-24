@@ -38,7 +38,7 @@ app.post("/webhook", line.middleware(config), (req, res) => {
 const client = new line.Client(config);
 
 const handleEvent = async (e) => {
-  let replyText = "";
+  let mes = "";
   if (e.type !== "message" || e.message.type !== "text") {
     return Promise.resolve(null);
   }
@@ -47,9 +47,9 @@ const handleEvent = async (e) => {
     mes = "ちょっとまってね";
     getName(e.source.userId);
   } else if (e.message.text === "地域を変更") {
-    replyText = "特になし";
+    mes = "特になし";
   } else if (e.message.text === "通知時間を変更") {
-    replyText = "通知時間を変更してください";
+    mes = "通知時間を変更してください";
   }
 
   return client.replyMessage(e.replyToken, {
