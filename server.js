@@ -3,6 +3,7 @@
 const express = require("express");
 const mysql = require("mysql");
 const line = require("@line/bot-sdk");
+const { json } = require("express");
 const PORT = process.env.PORT || 5000;
 
 const config = {
@@ -45,17 +46,17 @@ const handleEvent = async (e) => {
 
   if (e.message.text === "明日のごみは？") {
     mes = "ちょっとまってね";
-    getName(e.source.userId);
+    return getName(e.source.userId);
   } else if (e.message.text === "地域を変更") {
     mes = "特になし";
   } else if (e.message.text === "通知時間を変更") {
     mes = "通知時間を変更してください";
   }
 
-  return client.replyMessage(e.replyToken, {
-    type: "text",
-    text: mes,
-  });
+  // return client.replyMessage(e.replyToken, {
+  //   type: "text",
+  //   text: mes,
+  // });
 };
 
 const getName = async (userId) => {
@@ -63,7 +64,7 @@ const getName = async (userId) => {
     "SELECT * FROM test",
     (err, results) => {
       console.log(results);
-      return JSON.parse(results[0].name);
+      return results[0].name;
     }
   );
   console.log(replyText);
@@ -71,7 +72,7 @@ const getName = async (userId) => {
   // const replyMes = JSON.stringify(replyText);
   // console.log(`replyMesは${replyMes}`);
 
-  await client.pushMessage(userId, {
+  return client.pushMessage(userId, {
     type: "text",
     text: `君の名前は${replyText}`,
   });
