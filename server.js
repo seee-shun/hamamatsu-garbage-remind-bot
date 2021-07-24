@@ -63,16 +63,15 @@ const getName = async (userId) => {
     "SELECT * FROM test",
     (err, results) => {
       console.log(results);
-      console.log(results[0]);
       console.log(results[0].name);
       return results[0].name;
     }
   );
-  console.log(replyText);
+  console.log(`replytextは${replyText}`);
 
   await client.pushMessage(userId, {
     type: "text",
-    text: `君の名前は${replyText}`,
+    text: `君の名前は${replyText}です。`,
   });
 };
 // const toMessage = () => {
