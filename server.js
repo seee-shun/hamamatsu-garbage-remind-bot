@@ -63,7 +63,7 @@ const getName = async (userId) => {
     "SELECT * FROM test",
     (err, results) => {
       console.log(results);
-      return JSON.stringify(results[0].name);
+      return JSON.parse(results[0].name);
     }
   );
   console.log(replyText);
