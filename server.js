@@ -39,7 +39,7 @@ const client = new line.Client(config);
 
 const handleEvent = async (e) => {
   let replyText = "";
-  connection.query("SELECT * FROM test", (err, results) => {
+  await connection.query("SELECT * FROM test", (err, results) => {
     replyText = results[0].name;
   });
   if (e.type !== "message" || e.message.type !== "text") {
