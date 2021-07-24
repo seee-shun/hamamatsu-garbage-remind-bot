@@ -58,7 +58,7 @@ const handleEvent = async (e) => {
   });
 };
 
-const getName = async () => {
+const getName = async (userId) => {
   const replyText = await connection.query(
     "SELECT * FROM test",
     (err, results) => {
