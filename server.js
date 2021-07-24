@@ -27,7 +27,6 @@ const app = express();
 //   console.log("success");
 // });
 
-// let replyText = "";
 // app.get("/", (req, res) => {
 //   connection.query("SELECT * FROM users", (err, results) => {
 //     console.log(results[0].createdAt);
@@ -46,6 +45,7 @@ app.post("/webhook", line.middleware(config), (req, res) => {
 const client = new line.Client(config);
 
 const handleEvent = async (e) => {
+  let replyText = "";
   if (e.type !== "message" || e.message.type !== "text") {
     return Promise.resolve(null);
   }
