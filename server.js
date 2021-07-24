@@ -1,10 +1,9 @@
 "use strict";
 
-require("dotenv").config();
 const express = require("express");
-const mysql = require("mysql");
-const line = require("@line/bot-sdk");
-const PORT = process.env.PORT || 3000;
+// const mysql = require("mysql");
+// const line = require("@line/bot-sdk");
+const PORT = process.env.PORT || 5000;
 
 // const config = {
 //   channelSecret: "356084186cc5e93d0d8f4b1c896b384a",
@@ -29,13 +28,13 @@ const app = express();
 //   console.log("success");
 // });
 
-let replyText = "";
-app.get("/", (req, res) => {
-  connection.query("SELECT * FROM users", (err, results) => {
-    console.log(results[0].createdAt);
-    replyText = results[0].createdAt;
-  });
-});
+// let replyText = "";
+// app.get("/", (req, res) => {
+//   connection.query("SELECT * FROM users", (err, results) => {
+//     console.log(results[0].createdAt);
+//     replyText = results[0].createdAt;
+//   });
+// });
 
 app.get("/", (req, res) => res.send("Hello LINE BOT!(GET)")); //ブラウザ確認用(無くても問題ない)
 // app.post("/webhook", line.middleware(config), (req, res) => {
@@ -78,7 +77,7 @@ app.get("/", (req, res) => res.send("Hello LINE BOT!(GET)")); //ブラウザ確�
 // }, new Date().setHours(2, 50, 0, 0) - new Date());
 
 app.listen(PORT, () =>
-  console.log(`Hamamatsu Garbage remind bot listening on port ${port}!`)
+  console.log(`Hamamatsu Garbage remind bot listening on port ${PORT}!`)
 );
 // app.listen(PORT);
 // console.log(`Sever running at ${PORT}`);
