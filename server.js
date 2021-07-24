@@ -1,7 +1,7 @@
 "use strict";
 
 const express = require("express");
-// const mysql = require("mysql");
+const mysql = require("mysql");
 const line = require("@line/bot-sdk");
 const PORT = process.env.PORT || 5000;
 
@@ -12,12 +12,12 @@ const config = {
 
 const app = express();
 
-// const connection = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "shse4631",
-//   database: "garbage_bot",
-// });
+const connection = mysql.createConnection({
+  host: "us-cdbr-east-04.cleardb.com",
+  user: "b215f8f6b04092",
+  password: "0afba604",
+  database: "heroku_bb69fae61fac0c1",
+});
 
 // connection.connect((err) => {
 //   if (err) {
@@ -27,12 +27,14 @@ const app = express();
 //   console.log("success");
 // });
 
-// app.get("/", (req, res) => {
-//   connection.query("SELECT * FROM users", (err, results) => {
-//     console.log(results[0].createdAt);
-//     replyText = results[0].createdAt;
-//   });
-// });
+app.get("/", (req, res) => {
+  connection.query("SELECT * FROM test", (err, results) => {
+    console.log(results[0]);
+    console.log(results[0].name);
+    console.log(results[1].name);
+    replyText = results[0].name;
+  });
+});
 
 app.get("/", (req, res) => res.send("Hello LINE BOT!(GET)")); //ブラウザ確認用(無くても問題ない)
 app.post("/webhook", line.middleware(config), (req, res) => {
@@ -51,7 +53,7 @@ const handleEvent = async (e) => {
   }
 
   if (e.message.text === "明日のごみは？") {
-    replyText = "明日はかん、ペットボトルがゴミ出しの日です";
+    // replyText = "明日はかん、ペットボトルがゴミ出しの日です";
   } else if (e.message.text === "地域を変更") {
     replyText = "特になし";
   } else if (e.message.text === "通知時間を変更") {
