@@ -19,13 +19,13 @@ const connection = mysql.createConnection({
   database: "heroku_bb69fae61fac0c1",
 });
 
-// connection.connect((err) => {
-//   if (err) {
-//     console.log(`error connecting:${err.stack}`);
-//     return;
-//   }
-//   console.log("success");
-// });
+connection.connect((err) => {
+  if (err) {
+    console.log(`error connecting:${err.stack}`);
+    return;
+  }
+  console.log("success");
+});
 
 app.get("/", (req, res) => res.send("Hello LINE BOT!(GET)")); //ブラウザ確認用(無くても問題ない)
 app.post("/webhook", line.middleware(config), (req, res) => {
@@ -44,7 +44,8 @@ const handleEvent = async (e) => {
   }
 
   if (e.message.text === "明日のごみは？") {
-    replyText = getName();
+    mes = "ちょっとまってね";
+    getName(e.source.userId);
   } else if (e.message.text === "地域を変更") {
     replyText = "特になし";
   } else if (e.message.text === "通知時間を変更") {
@@ -53,13 +54,22 @@ const handleEvent = async (e) => {
 
   return client.replyMessage(e.replyToken, {
     type: "text",
-    text: replyText,
+    text: mes,
   });
 };
 
 const getName = async () => {
-  await connection.query("SELECT * FROM test", (err, results) => {
-    return results[0].name;
+  const replyText = await connection.query(
+    "SELECT * FROM test",
+    (err, results) => {
+      console.log(results);
+      return results[0].name;
+    }
+  );
+
+  await client.pushMessage(userId, {
+    type: "text",
+    text: `君の名前は${replyText}`,
   });
 };
 // const toMessage = () => {
