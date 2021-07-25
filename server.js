@@ -62,30 +62,38 @@ const handleEvent = async (e) => {
   }
 
   if (postalCodeCheck.test(e.message.text) === true) {
-    const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
-    const res = await axios.get(URL);
-    const address = res.data.results[0].address3;
+    try {
+      const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
+      const res = await axios.get(URL);
+      const address = res.data.results[0].address3;
 
-    return client.pushMessage(e.source.userId, {
-      type: "template",
-      altText: "this is a confirm template",
-      template: {
-        type: "confirm",
-        text: `あなたの住む地域は${address}ですか？`,
-        actions: [
-          {
-            type: "message",
-            label: "はい",
-            text: "はい",
-          },
-          {
-            type: "message",
-            label: "いいえ",
-            text: "いいえ",
-          },
-        ],
-      },
-    });
+      return client.pushMessage(e.source.userId, {
+        type: "template",
+        altText: "this is a confirm template",
+        template: {
+          type: "confirm",
+          text: `あなたの住む地域は${address}ですか？`,
+          actions: [
+            {
+              type: "message",
+              label: "はい",
+              text: "はい",
+            },
+            {
+              type: "message",
+              label: "いいえ",
+              text: "いいえ",
+            },
+          ],
+        },
+      });
+    } catch (error) {
+      console.log(`error:${error}`);
+      return client.pushMessage(e.source.userId, {
+        type: "text",
+        text: "存在しない住所です。正しい郵便番号を入力してください",
+      });
+    }
   }
 
   if (e.message.text === "明日のごみは？") {
