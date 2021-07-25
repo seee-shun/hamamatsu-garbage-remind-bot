@@ -75,6 +75,22 @@ const handleEvent = async (e) => {
       const res = await axios.get(URL);
       const address = res.data.results[0].address3;
 
+      connection.query(
+        `SELECT garbage_number FROM cities WHERE name like '${address}%'`,
+        (err, results) => {
+          if (err) throw err;
+          console.log(results);
+          // connection.query(
+          //   `INSERT INTO users(livedArea) VALUES('${results[0].garbage_number} ')`,
+          //   (error,
+          //   (vals) => {
+          //     if (error) throw error;
+          //     console.log(vals);
+          //   })
+          // );
+        }
+      );
+
       return client.pushMessage(e.source.userId, {
         type: "template",
         altText: "this is a confirm template",
