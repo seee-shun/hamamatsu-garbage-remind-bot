@@ -24,7 +24,7 @@ const handleDisconnect = () => {
   connection.connect((err) => {
     if (err) {
       console.log(`error connecting:${err.stack}`);
-      setTimeout(handleDisconnect, 1000);
+      setTimeout(handleDisconnect, 1000); // 再接続を少し遅らせる処理
     }
     console.log("success");
   });
