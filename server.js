@@ -80,14 +80,13 @@ const handleEvent = async (e) => {
         (err, results) => {
           if (err) throw err;
           console.log(results);
-          // connection.query(
-          //   `INSERT INTO users(livedArea) VALUES('${results[0].garbage_number} ')`,
-          //   (error,
-          //   (vals) => {
-          //     if (error) throw error;
-          //     console.log(vals);
-          //   })
-          // );
+          connection.query(
+            `INSERT INTO users(livedArea) VALUES('${results[0].garbage_number}') WHERE userId = '${e.source.userId}')`,
+            (error, vals) => {
+              if (error) throw error;
+              console.log(vals);
+            }
+          );
         }
       );
 
