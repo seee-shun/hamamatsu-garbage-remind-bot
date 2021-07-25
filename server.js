@@ -55,65 +55,65 @@ const client = new line.Client(config);
 
 const handleEvent = async (e) => {
   let mes = "桃尻かなえ";
-  const postalCodeCheck = /^[0-9]{3}-?[0-9]{4}$/;
+  // const postalCodeCheck = /^[0-9]{3}-?[0-9]{4}$/;
 
   if (e.type !== "message" || e.message.type !== "text") {
     return Promise.resolve(null);
   }
   // if userId があるかチェック　もしないなら　users
 
-  if (postalCodeCheck.test(e.message.text) === true) {
-    connection.query(
-      `INSERT INTO users(userId) VALUES('${e.source.userId}')`,
-      (err, results) => {
-        if (err) throw err;
-        console.log(results);
-      }
-    );
-    try {
-      const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
-      const res = await axios.get(URL);
-      const address = res.data.results[0].address3;
+  // if (postalCodeCheck.test(e.message.text) === true) {
+  //   connection.query(
+  //     `INSERT INTO users(userId) VALUES('${e.source.userId}')`,
+  //     (err, results) => {
+  //       if (err) throw err;
+  //       console.log(results);
+  //     }
+  //   );
+  //   try {
+  //     const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
+  //     const res = await axios.get(URL);
+  //     const address = res.data.results[0].address3;
 
-      return client.pushMessage(e.source.userId, {
-        type: "template",
-        altText: "this is a confirm template",
-        template: {
-          type: "confirm",
-          text: `あなたの住む地域は${address}ですか？`,
-          actions: [
-            {
-              type: "message",
-              label: "はい",
-              text: "はい",
-            },
-            {
-              type: "message",
-              label: "いいえ",
-              text: "いいえ",
-            },
-          ],
-        },
-      });
-    } catch (error) {
-      console.log(`error:${error}`);
-      return client.pushMessage(e.source.userId, {
-        type: "text",
-        text: "存在しない住所です。正しい郵便番号を入力してください",
-      });
-    }
-  }
+  //     return client.pushMessage(e.source.userId, {
+  //       type: "template",
+  //       altText: "this is a confirm template",
+  //       template: {
+  //         type: "confirm",
+  //         text: `あなたの住む地域は${address}ですか？`,
+  //         actions: [
+  //           {
+  //             type: "message",
+  //             label: "はい",
+  //             text: "はい",
+  //           },
+  //           {
+  //             type: "message",
+  //             label: "いいえ",
+  //             text: "いいえ",
+  //           },
+  //         ],
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.log(`error:${error}`);
+  //     return client.pushMessage(e.source.userId, {
+  //       type: "text",
+  //       text: "存在しない住所です。正しい郵便番号を入力してください",
+  //     });
+  //   }
+  // }
 
-  if (e.message.text === "明日のごみは？") {
-    connection.query("SELECT * FROM test", (err, results) => {
-      return client.pushMessage(e.source.userId, {
-        type: "text",
-        text: results[0].name,
-      });
-    });
-  } else if (e.message.text === "地域を変更") {
-    mes = "城北でいいですか？";
-  }
+  // if (e.message.text === "明日のごみは？") {
+  //   connection.query("SELECT * FROM test", (err, results) => {
+  //     return client.pushMessage(e.source.userId, {
+  //       type: "text",
+  //       text: results[0].name,
+  //     });
+  //   });
+  // } else if (e.message.text === "地域を変更") {
+  //   mes = "城北でいいですか？";
+  // }
 
   return client.replyMessage(e.replyToken, {
     type: "text",
