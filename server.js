@@ -105,13 +105,17 @@ const handleEvent = async (e) => {
   }
 
   if (e.message.text === "明日のごみは？") {
-    connection.query("SELECT * FROM test", (err, results) => {
+    const date = new Date();
+    connection.query("SELECT * FROM garbage_days ", (err, results) => {
+      console.log(results);
       return client.pushMessage(e.source.userId, {
         type: "text",
-        text: results[0].name,
+        text: date,
       });
     });
-  } else if (e.message.text === "地域を変更") {
+  }
+
+  if (e.message.text === "地域を変更") {
     mes = "城北でいいですか？";
   }
 
