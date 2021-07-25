@@ -61,11 +61,11 @@ const handleEvent = async (e) => {
     return Promise.resolve(null);
   }
 
-  if (postalCode.test(e.message.text) === true) {
+  if (postalCodeCheck.test(e.message.text) === true) {
     const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
     const res = await axios.get(URL);
     console.log(res.data);
-    // console.log(res.data.results);
+    console.log(res.data.results);
     // const address = res.data.results[0].address3;
 
     return client.pushMessage(e.source.userId, {
