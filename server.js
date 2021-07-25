@@ -65,9 +65,9 @@ const handleEvent = async (e) => {
     console.log(URL);
     const res = await axios.get(URL);
     console.log(res);
-    console.log(res.results);
-    console.log(res.results[0]);
-    console.log(res.results[0].address3);
+    // console.log(res.results);
+    // console.log(res.results[0]);
+    // console.log(res.results[0].address3);
     return client.pushMessage(e.source.userId, {
       type: "text",
       text: URL,
