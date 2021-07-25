@@ -55,7 +55,7 @@ const client = new line.Client(config);
 
 const handleEvent = async (e) => {
   let mes = "桃尻かなえ";
-  const postalCodeCheck = /^[0-9]{3}-[0-9]{4}$/;
+  const postalCodeCheck = /^[0-9]{3}-?[0-9]{4}$/;
 
   if (e.type !== "message" || e.message.type !== "text") {
     return Promise.resolve(null);
@@ -64,13 +64,10 @@ const handleEvent = async (e) => {
   if (postalCodeCheck.test(e.message.text) === true) {
     const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
     const res = await axios.get(URL);
-    console.log(res.data);
-    console.log(res.data.results);
     const address = res.data.results[0].address3;
 
     return client.pushMessage(e.source.userId, {
       type: "text",
-      // text: URL,
       text: `あなたの住む地域は${address}ですか？`,
     });
   }
