@@ -63,7 +63,7 @@ const handleEvent = async (e) => {
 
   if (postalCodeCheck.test(e.message.text) === true) {
     connection.query(
-      "INSERT INTO users(userId) VALUES(e.source.userId)",
+      `INSERT INTO users(userId) VALUES(${e.source.userId})`,
       (err, results) => {
         if (err) throw err;
         console.log(results);
