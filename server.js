@@ -60,16 +60,16 @@ const handleEvent = async (e) => {
   if (e.type !== "message" || e.message.type !== "text") {
     return Promise.resolve(null);
   }
-  // if userId があるかチェック　もしないなら　usersに登録
-  // connection.query(
-  //   `INSERT INTO users(userId) VALUES('${e.source.userId}')`,
-  //   (err, results) => {
-  //     if (err) throw err;
-  //     console.log(results);
-  //   }
-  // );
+  // if userId があるかチェック　もしないなら　users
 
   if (postalCodeCheck.test(e.message.text) === true) {
+    connection.query(
+      `INSERT INTO users(userId) VALUES('${e.source.userId}')`,
+      (err, results) => {
+        if (err) throw err;
+        console.log(results);
+      }
+    );
     try {
       const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
       const res = await axios.get(URL);
@@ -102,16 +102,6 @@ const handleEvent = async (e) => {
         text: "存在しない住所です。正しい郵便番号を入力してください",
       });
     }
-  }
-
-  if (e.message.text === "はい") {
-    connection.query(
-      `INSERT INTO users(userId) VALUES('${e.source.userId}')`,
-      (err, results) => {
-        if (err) throw err;
-        console.log(results);
-      }
-    );
   }
 
   if (e.message.text === "明日のごみは？") {
