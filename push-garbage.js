@@ -40,14 +40,8 @@ const toMessage = () => {
   });
 };
 
-// setTimeout(() => {
 toMessage();
-// }, new Date().setHours(2, 50, 0, 0) - new Date());
 
 app.listen(PORT, () =>
   console.log(`Hamamatsu Garbage remind bot listening on port ${PORT}!`)
 );
-// app.listen(PORT);
-// console.log(`Sever running at ${PORT}`);
-// process.env.NOW_REGION ? (module.exports = app) : app.listen(PORT);
-// console.log(`Server running at ${PORT}`);
