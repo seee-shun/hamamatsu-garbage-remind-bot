@@ -64,7 +64,7 @@ const handleEvent = async (e) => {
   if (postalCode.test(e.message.text) === true) {
     const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
     const res = await axios.get(URL);
-    const address = res.results[0].address3;
+    const address = res.data.results[0].address3;
 
     return client.pushMessage(e.source.userId, {
       type: "text",
