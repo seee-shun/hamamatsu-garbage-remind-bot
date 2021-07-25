@@ -80,7 +80,7 @@ const handleEvent = async (e) => {
           if (err) throw err;
           console.log(results);
           connection.query(
-            `INSERT INTO users (livedArea) VALUES(\'${results[0].garbage_number}\') WHERE userId='${e.source.userId}'`,
+            `INSERT INTO users (livedArea) VALUES(\`${results[0].garbage_number}\`) WHERE userId = '${e.source.userId}'`,
             (error, vals) => {
               if (error) throw error;
               console.log(vals);
@@ -88,7 +88,6 @@ const handleEvent = async (e) => {
           );
         }
       );
-
       return client.pushMessage(e.source.userId, {
         type: "template",
         altText: "this is a confirm template",
