@@ -64,7 +64,7 @@ const handleEvent = async (e) => {
     const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
     console.log(URL);
     const res = await axios.get(URL);
-    console.log(res);
+    console.log(res.data);
     // console.log(res.results);
     // console.log(res.results[0]);
     // console.log(res.results[0].address3);
