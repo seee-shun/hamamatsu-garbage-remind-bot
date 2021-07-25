@@ -46,7 +46,6 @@ const handleEvent = (e) => {
   }
 
   if (e.message.text === "明日のごみは？") {
-    mes = "ちょっとまってね";
     // return getName(e.source.userId);
     connection.query("SELECT * FROM test", (err, results) => {
       console.log(results);
@@ -71,16 +70,16 @@ const handleEvent = (e) => {
 };
 
 const getName = async (userId) => {};
-// const toMessage = () => {
-//   client.pushMessage("U1221c5a7f6d56970a7dce56d99a5a9ae", {
-//     type: "text",
-//     text: `今の最新だよ！`,
-//   });
-// };
+const toMessage = () => {
+  client.pushMessage("U1221c5a7f6d56970a7dce56d99a5a9ae", {
+    type: "text",
+    text: `今の最新だよ！`,
+  });
+};
 
-// setTimeout(() => {
-//   toMessage();
-// }, new Date().setHours(2, 50, 0, 0) - new Date());
+setTimeout(() => {
+  toMessage();
+}, new Date().setHours(2, 50, 0, 0) - new Date());
 
 app.listen(PORT, () =>
   console.log(`Hamamatsu Garbage remind bot listening on port ${PORT}!`)
