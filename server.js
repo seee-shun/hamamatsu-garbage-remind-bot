@@ -3,7 +3,6 @@
 const express = require("express");
 const mysql = require("mysql");
 const line = require("@line/bot-sdk");
-const { json } = require("express");
 const PORT = process.env.PORT || 5000;
 
 const config = {
@@ -69,17 +68,17 @@ const handleEvent = (e) => {
   // });
 };
 
-const getName = async (userId) => {};
-const toMessage = () => {
-  client.pushMessage("U1221c5a7f6d56970a7dce56d99a5a9ae", {
-    type: "text",
-    text: `今の最新だよ！`,
-  });
-};
+// const getName = async (userId) => {};
+// const toMessage = () => {
+//   client.pushMessage("U1221c5a7f6d56970a7dce56d99a5a9ae", {
+//     type: "text",
+//     text: `今の最新だよ！`,
+//   });
+// };
 
-setTimeout(() => {
-  toMessage();
-}, new Date().setHours(2, 50, 0, 0) - new Date());
+// setTimeout(() => {
+//   toMessage();
+// }, new Date().setHours(2, 50, 0, 0) - new Date());
 
 app.listen(PORT, () =>
   console.log(`Hamamatsu Garbage remind bot listening on port ${PORT}!`)
