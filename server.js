@@ -53,14 +53,26 @@ app.post("/webhook", line.middleware(config), (req, res) => {
 
 const client = new line.Client(config);
 
-const handleEvent = (e) => {
+const handleEvent = async (e) => {
   let mes = "桃尻かなえ";
-
+  let postalCodeCheck = /^[0-9]{3}-[0-9]{4}$/;
+  console.log(postalCodeCheck.test(e.message.text));
   if (e.type !== "message" || e.message.type !== "text") {
     return Promise.resolve(null);
   }
-
-  getArea(e.message.text);
+  if (e.message.text === "432-8012") {
+    const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
+    console.log(URL);
+    const res = await axios.get(URL);
+    console.log(res);
+    console.log(res.results);
+    console.log(res.results[0]);
+    console.log(res.results[0].address3);
+    return client.pushMessage(e.source.userId, {
+      type: "text",
+      text: URL,
+    });
+  }
 
   // if (postalCode.test(e.message.text) === true) {
   //   return client.pushMessage(e.source.userId, {
@@ -87,17 +99,10 @@ const handleEvent = (e) => {
   });
 };
 
-const getArea = async (postalCode) => {
-  let postalCodeCheck = /^[0-9]{3}-[0-9]{4}$/;
-  console.log(postalCodeCheck.test(postalCode));
-  const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${postalCode}`;
-  const res = axios.get(URL);
-  console.log(res);
-  console.log(res.results);
-  console.log(res.results[0]);
-  console.log(res.results[0].address3);
-  // const address = res.results[0].address3;
-};
+// const getArea = async (postalCode) => {
+
+//   // const address = res.results[0].address3;
+// };
 
 app.listen(PORT, () =>
   console.log(`Hamamatsu Garbage remind bot listening on port ${PORT}!`)
