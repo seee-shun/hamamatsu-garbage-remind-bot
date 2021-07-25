@@ -131,11 +131,25 @@ const handleEvent = async (e) => {
     // 日付整形
     const month_zero = ("00" + month).slice(-2);
     const day_zero = ("00" + day).slice(-2);
-    const today = "2021-" + month_zero + "-" + day_zero;
+    const tomorrow = "2021-" + month_zero + "-" + day_zero;
 
-    // クエリ文
-    var sql = "SELECT * FROM users,garbage_days WHERE day = ?";
-    connection.query("SELECT * FROM garbage_days ", (err, results) => {
+    connection.query(
+      `SELECT livedArea from users WHERE userId = '${e.source.userId}'`,
+      (err, results) => {
+        if (err) throw err;
+        // クエリ文
+        const sql = "SELECT * FROM garbage_days WHERE day = ?";
+        connection.query(sql, tomorrow, (error, vals) => {
+          //  client.pushMessage(e.source.userId, {
+          //    type: "text",
+          //    text: "明日のごみは" + results[i][livedArea] + "です！",
+          //  });
+          console.log(vals);
+        });
+      }
+    );
+
+    connection.query(sql, tomorrow, (err, results) => {
       console.log(results);
       return client.pushMessage(e.source.userId, {
         type: "text",
