@@ -13,10 +13,10 @@ const config = {
 const app = express();
 
 const connection = mysql.createConnection({
-  host: "us-cdbr-east-04.cleardb.com",
-  user: "b215f8f6b04092",
-  password: "0afba604",
-  database: "heroku_bb69fae61fac0c1",
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
 });
 
 connection.connect((err) => {
@@ -27,48 +27,8 @@ connection.connect((err) => {
   console.log("success");
 });
 
-app.get("/", (req, res) => res.send("Hello LINE BOT!(GET)")); //ブラウザ確認用(無くても問題ない)
-// app.post("/webhook", line.middleware(config), (req, res) => {
-//   console.log(req.body.events);
-//   Promise.all(req.body.events.map(handleEvent)).then((result) => {
-//     console.log(result);
-//     res.json(result);
-//   });
-// });
-
 const client = new line.Client(config);
 
-// const handleEvent = (e) => {
-//   let mes = "";
-//   if (e.type !== "message" || e.message.type !== "text") {
-//     return Promise.resolve(null);
-//   }
-
-//   if (e.message.text === "明日のごみは？") {
-//     // return getName(e.source.userId);
-//     connection.query("SELECT * FROM test", (err, results) => {
-//       console.log(results);
-//       return client.pushMessage(e.source.userId, {
-//         type: "text",
-//         text: results[0].name,
-//       });
-//     });
-//     // console.log(JSON.stringify(replyText));
-//     // const replyMes = JSON.stringify(replyText);
-//     // console.log(`replyMesは${replyMes}`);
-//   } else if (e.message.text === "地域を変更") {
-//     mes = "特になし";
-//   } else if (e.message.text === "通知時間を変更") {
-//     mes = "通知時間を変更してください";
-//   }
-
-//   // return client.replyMessage(e.replyToken, {
-//   //   type: "text",
-//   //   text: mes,
-//   // });
-// };
-
-// const getName = async (userId) => {};
 const toMessage = () => {
   connection.query("SELECT * FROM users", (err, results) => {
     for (let i = 0; i < results.length; i++) {
