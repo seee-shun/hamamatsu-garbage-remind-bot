@@ -55,35 +55,25 @@ const client = new line.Client(config);
 
 const handleEvent = async (e) => {
   let mes = "桃尻かなえ";
-  let postalCodeCheck = /^[0-9]{3}-[0-9]{4}$/;
-  console.log(postalCodeCheck.test(e.message.text));
+  const postalCodeCheck = /^[0-9]{3}-[0-9]{4}$/;
+
   if (e.type !== "message" || e.message.type !== "text") {
     return Promise.resolve(null);
   }
-  if (e.message.text === "432-8012") {
+
+  if (postalCode.test(e.message.text) === true) {
     const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
-    console.log(URL);
     const res = await axios.get(URL);
-    console.log(res.data);
-    // console.log(res.results);
-    // console.log(res.results[0]);
-    // console.log(res.results[0].address3);
+    const address = res.results[0].address3;
+
     return client.pushMessage(e.source.userId, {
       type: "text",
-      text: URL,
+      text: `あなたの住む地域は${address}ですか？`,
     });
   }
 
-  // if (postalCode.test(e.message.text) === true) {
-  //   return client.pushMessage(e.source.userId, {
-  //     type: "text",
-  //     text: `あなたの住む地域は${address}ですか？`,
-  //   });
-  // }
-
   if (e.message.text === "明日のごみは？") {
     connection.query("SELECT * FROM test", (err, results) => {
-      console.log(results);
       return client.pushMessage(e.source.userId, {
         type: "text",
         text: results[0].name,
@@ -98,11 +88,6 @@ const handleEvent = async (e) => {
     text: mes,
   });
 };
-
-// const getArea = async (postalCode) => {
-
-//   // const address = res.results[0].address3;
-// };
 
 app.listen(PORT, () =>
   console.log(`Hamamatsu Garbage remind bot listening on port ${PORT}!`)
