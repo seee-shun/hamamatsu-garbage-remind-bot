@@ -64,7 +64,10 @@ const handleEvent = async (e) => {
     const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
     const res = await axios.get(URL);
     const address = res.results[0].address3;
-    mes = `あなたの住む地域は${address}ですか？`;
+    return client.pushMessage(e.source.userId, {
+      type: "text",
+      text: `あなたの住む地域は${address}ですか？`,
+    });
   }
 
   if (e.message.text === "明日のごみは？") {
