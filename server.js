@@ -62,6 +62,13 @@ const handleEvent = async (e) => {
   }
 
   if (postalCodeCheck.test(e.message.text) === true) {
+    connection.query(
+      "INSERT INTO users(userId) VALUES(e.source.userId)",
+      (err, results) => {
+        if (err) throw err;
+        console.log(results);
+      }
+    );
     try {
       const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
       const res = await axios.get(URL);
