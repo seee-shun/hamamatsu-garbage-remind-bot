@@ -41,9 +41,9 @@ const client = new line.Client(config);
 const toMessage = () => {
   // 日付を取
   const time = new Date();
-  const month = time.getMonth() + 1;
-  const day = time.getDate();
-  const hour = time.getHours();
+  let month = time.getMonth() + 1;
+  let day = time.getDate();
+  let hour = time.getHours();
   let str = "";
 
   if (hour < 9) {

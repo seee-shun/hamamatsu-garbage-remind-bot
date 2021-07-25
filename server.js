@@ -89,24 +89,26 @@ const handleEvent = async (e) => {
         }
       );
       return client.pushMessage(e.source.userId, {
-        type: "template",
-        altText: "this is a confirm template",
-        template: {
-          type: "confirm",
-          text: `あなたの住む地域は${address}ですか？`,
-          actions: [
-            {
-              type: "message",
-              label: "はい",
-              text: "はい",
-            },
-            {
-              type: "message",
-              label: "いいえ",
-              text: "いいえ",
-            },
-          ],
-        },
+        type: "text",
+        text: `あなたの住む地域を${address}に設定しました！`,
+        // type: "template",
+        // altText: "this is a confirm template",
+        // template: {
+        //   type: "confirm",
+        //   text: `あなたの住む地域は${address}ですか？`,
+        //   actions: [
+        //     {
+        //       type: "message",
+        //       label: "はい",
+        //       text: "はい",
+        //     },
+        //     {
+        //       type: "message",
+        //       label: "いいえ",
+        //       text: "いいえ",
+        //     },
+        //   ],
+        // },
       });
     } catch (error) {
       console.log(`error:${error}`);
@@ -118,7 +120,21 @@ const handleEvent = async (e) => {
   }
 
   if (e.message.text === "明日のごみは？") {
-    const date = new Date();
+    const time = new Date();
+    let month = time.getMonth() + 1;
+    let day = time.getDate();
+    let hour = time.getHours();
+    time.setDate(time.getDate() + 1);
+    month = time.getMonth() + 1;
+    day = time.getDate();
+
+    // 日付整形
+    const month_zero = ("00" + month).slice(-2);
+    const day_zero = ("00" + day).slice(-2);
+    const today = "2021-" + month_zero + "-" + day_zero;
+
+    // クエリ文
+    var sql = "SELECT * FROM users,garbage_days WHERE day = ?";
     connection.query("SELECT * FROM garbage_days ", (err, results) => {
       console.log(results);
       return client.pushMessage(e.source.userId, {
@@ -129,7 +145,8 @@ const handleEvent = async (e) => {
   }
 
   if (e.message.text === "地域を変更") {
-    mes = "城北でいいですか？";
+    mes =
+      "地域変更のために郵便番号（例：432-8011...ハイフン無しでも可）を入力してください！";
   }
 
   return client.replyMessage(e.replyToken, {
