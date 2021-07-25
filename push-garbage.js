@@ -39,7 +39,8 @@ connection.connect((err) => {
 const client = new line.Client(config);
 
 const toMessage = () => {
-  // 日付を取 time = new Date();
+  // 日付を取
+  const time = new Date();
   const month = time.getMonth() + 1;
   const day = time.getDate();
   const hour = time.getHours();
@@ -72,17 +73,13 @@ const toMessage = () => {
     // ユーザの居住区番号によって処理
     for (let i = 0; i < results.length; i++) {
       // 居住地番号
-      var livedArea = results[i].livedArea;
+      const livedArea = results[i].livedArea;
+      console.log(results);
       console.log("live", livedArea);
-
       console.log(results[i][livedArea]);
-
-      // connection.query("SELECT * FROM users", (err, results) => {
-      // });
 
       client.pushMessage(results[i].userId, {
         type: "text",
-        // text: `のごみはかん、ペットボトルです！`,
         text: str + "のごみは" + results[i][livedArea] + "です！",
       });
     }
