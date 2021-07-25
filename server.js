@@ -43,6 +43,8 @@ const handleEvent = (e) => {
   if (e.type !== "message" || e.message.type !== "text") {
     return Promise.resolve(null);
   }
+  if (e.message.text === "432-8012") {
+  }
 
   if (e.message.text === "明日のごみは？") {
     // return getName(e.source.userId);

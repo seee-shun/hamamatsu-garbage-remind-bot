@@ -70,9 +70,13 @@ const client = new line.Client(config);
 
 // const getName = async (userId) => {};
 const toMessage = () => {
-  client.pushMessage("U1221c5a7f6d56970a7dce56d99a5a9ae", {
-    type: "text",
-    text: `あしたのごみはかん、ペットボトルです！`,
+  connection.query("SELECT * FROM users", (err, results) => {
+    for (let i = 0; i < results.length; i++) {
+      client.pushMessage(results[i].userId, {
+        type: "text",
+        text: `あしたのごみはかん、ペットボトルです！`,
+      });
+    }
   });
 };
 
