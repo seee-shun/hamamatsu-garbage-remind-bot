@@ -74,14 +74,13 @@ const handleEvent = async (e) => {
       const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
       const res = await axios.get(URL);
       const address = res.data.results[0].address3;
-
       connection.query(
         `SELECT garbage_number FROM cities WHERE name like '${address}%'`,
         (err, results) => {
           if (err) throw err;
           console.log(results);
           connection.query(
-            `INSERT INTO users(livedArea) VALUES(\`${results[0].garbage_number}\`) WHERE userId='${e.source.userId}'`,
+            `INSERT INTO users (livedArea) VALUES(\`${results[0].garbage_number}\`) WHERE userId='${e.source.userId}'`,
             (error, vals) => {
               if (error) throw error;
               console.log(vals);
