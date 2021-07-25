@@ -53,7 +53,7 @@ app.post("/webhook", line.middleware(config), (req, res) => {
 
 const client = new line.Client(config);
 
-const handleEvent = async (e) => {
+const handleEvent = (e) => {
   let mes = "桃尻かなえ";
   let postalCode = /^[0-9]{3}-[0-9]{4}$/;
 
@@ -62,7 +62,7 @@ const handleEvent = async (e) => {
   }
   if (postalCode.test(e.message.text) === true) {
     const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
-    const res = await axios.get(URL);
+    const res = axios.get(URL);
     const address = res.results[0].address3;
     return client.pushMessage(e.source.userId, {
       type: "text",
