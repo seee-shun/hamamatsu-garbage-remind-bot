@@ -104,16 +104,16 @@ const handleEvent = async (e) => {
     }
   }
 
-  // if (e.message.text === "明日のごみは？") {
-  //   connection.query("SELECT * FROM test", (err, results) => {
-  //     return client.pushMessage(e.source.userId, {
-  //       type: "text",
-  //       text: results[0].name,
-  //     });
-  //   });
-  // } else if (e.message.text === "地域を変更") {
-  //   mes = "城北でいいですか？";
-  // }
+  if (e.message.text === "明日のごみは？") {
+    connection.query("SELECT * FROM test", (err, results) => {
+      return client.pushMessage(e.source.userId, {
+        type: "text",
+        text: results[0].name,
+      });
+    });
+  } else if (e.message.text === "地域を変更") {
+    mes = "城北でいいですか？";
+  }
 
   return client.replyMessage(e.replyToken, {
     type: "text",
