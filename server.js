@@ -68,6 +68,7 @@ const handleEvent = async (e) => {
 
     return client.pushMessage(e.source.userId, {
       type: "template",
+      altText: "this is a confirm template",
       template: {
         type: "confirm",
         text: `あなたの住む地域は${address}ですか？`,
