@@ -138,13 +138,14 @@ const handleEvent = async (e) => {
       (err, results) => {
         if (err) throw err;
         console.log(results[0]);
+        const garbage = results[0].livedArea;
         // クエリ文
         const sql = "SELECT * FROM garbage_days WHERE day = ?";
         connection.query(sql, tomorrow, (error, vals) => {
-          //  client.pushMessage(e.source.userId, {
-          //    type: "text",
-          //    text: "明日のごみは" + results[i][livedArea] + "です！",
-          //  });
+          client.pushMessage(e.source.userId, {
+            type: "text",
+            text: "明日のごみは" + vals.garbage + "です！",
+          });
           console.log(vals);
         });
       }
