@@ -66,12 +66,12 @@ const handleEvent = async (e) => {
     const res = await axios.get(URL);
     console.log(res.data);
     console.log(res.data.results);
-    // const address = res.data.results[0].address3;
+    const address = res.data.results[0].address3;
 
     return client.pushMessage(e.source.userId, {
       type: "text",
-      text: URL,
-      // text: `あなたの住む地域は${address}ですか？`,
+      // text: URL,
+      text: `あなたの住む地域は${address}ですか？`,
     });
   }
 
