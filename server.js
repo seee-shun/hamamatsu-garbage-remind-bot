@@ -137,7 +137,7 @@ const handleEvent = async (e) => {
       `SELECT livedArea from users WHERE userId = '${e.source.userId}'`,
       (err, results) => {
         if (err) throw err;
-        console.log(results);
+        console.log(results[0]);
         // クエリ文
         const sql = "SELECT * FROM garbage_days WHERE day = ?";
         connection.query(sql, tomorrow, (error, vals) => {
