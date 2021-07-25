@@ -143,13 +143,13 @@ const handleEvent = async (e) => {
         const sql = "SELECT * FROM garbage_days WHERE day = ?";
         connection.query(sql, tomorrow, (error, vals) => {
           if (error) throw error;
-          // let mes = vals.results[0].livedArea;
-          // if (mes == "undefined") {
-          //   mes = "なし";
-          // }
+          let mes = vals[0].results[0].livedArea;
+          if (mes == "undefined") {
+            mes = "なし";
+          }
           client.pushMessage(e.source.userId, {
             type: "text",
-            text: "明日のごみはです！",
+            text: "明日のごみは" + mes + "です！",
           });
           console.log(vals);
         });
