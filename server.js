@@ -3,6 +3,7 @@
 const express = require("express");
 const mysql = require("mysql");
 const line = require("@line/bot-sdk");
+const axios = require("axios");
 const PORT = process.env.PORT || 5000;
 
 const config = {
@@ -52,12 +53,18 @@ app.post("/webhook", line.middleware(config), (req, res) => {
 
 const client = new line.Client(config);
 
-const handleEvent = (e) => {
+const handleEvent = async (e) => {
   let mes = "桃尻かなえ";
+  let postalCode = /^[0-9]{3}-[0-9]{4}$/;
+
   if (e.type !== "message" || e.message.type !== "text") {
     return Promise.resolve(null);
   }
-  if (e.message.text === "432-8012") {
+  if (postalCode.test(e.message.text) === true) {
+    const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
+    const res = await axios.get(URL);
+    const address = res.results[0].address3;
+    mes = `あなたの住む地域は${address}ですか？`;
   }
 
   if (e.message.text === "明日のごみは？") {
