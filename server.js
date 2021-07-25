@@ -67,8 +67,23 @@ const handleEvent = async (e) => {
     const address = res.data.results[0].address3;
 
     return client.pushMessage(e.source.userId, {
-      type: "text",
-      text: `あなたの住む地域は${address}ですか？`,
+      type: "template",
+      template: {
+        type: "confirm",
+        text: `あなたの住む地域は${address}ですか？`,
+        actions: [
+          {
+            type: "message",
+            label: "はい",
+            text: "はい",
+          },
+          {
+            type: "message",
+            label: "いいえ",
+            text: "いいえ",
+          },
+        ],
+      },
     });
   }
 
