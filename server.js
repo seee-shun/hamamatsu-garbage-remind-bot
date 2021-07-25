@@ -142,6 +142,10 @@ const handleEvent = async (e) => {
         // クエリ文
         const sql = "SELECT * FROM garbage_days WHERE day = ?";
         connection.query(sql, tomorrow, (error, vals) => {
+          let mes = "";
+          if (vals.garbage === "undefined") {
+            mes = "なし";
+          }
           client.pushMessage(e.source.userId, {
             type: "text",
             text: "明日のごみは" + vals.garbage + "です！",
