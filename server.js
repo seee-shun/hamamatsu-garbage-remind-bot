@@ -143,7 +143,7 @@ const handleEvent = async (e) => {
         const sql = "SELECT * FROM garbage_days WHERE day = ?";
         connection.query(sql, tomorrow, (error, vals) => {
           let mes = vals.garbage;
-          if (vals.garbage === "undefined") {
+          if (mes == "undefined") {
             mes = "なし";
           }
           client.pushMessage(e.source.userId, {
