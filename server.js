@@ -66,7 +66,3 @@ const handleEvent = (e) => {
 app.listen(PORT, () =>
   console.log(`Hamamatsu Garbage remind bot listening on port ${PORT}!`)
 );
-// app.listen(PORT);
-// console.log(`Sever running at ${PORT}`);
-// process.env.NOW_REGION ? (module.exports = app) : app.listen(PORT);
-// console.log(`Server running at ${PORT}`);
