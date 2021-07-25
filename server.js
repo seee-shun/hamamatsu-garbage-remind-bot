@@ -11,21 +11,36 @@ const config = {
 };
 
 const app = express();
+let connection;
 
-const connection = mysql.createConnection({
-  host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE,
-});
+const handleDisconnect = () => {
+  connection = mysql.createConnection({
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
+  });
 
-connection.connect((err) => {
-  if (err) {
-    console.log(`error connecting:${err.stack}`);
-    return;
-  }
-  console.log("success");
-});
+  connection.connect((err) => {
+    if (err) {
+      console.log(`error connecting:${err.stack}`);
+      setTimeout(handleDisconnect, 1000); // 再接続を少し遅らせる処理
+    }
+    console.log("success");
+  });
+
+  connection.on("error", (err) => {
+    console.log(`db error${err}`);
+    if (err.code === "PROTOCOL_CONNECTION_LOST") {
+      console.log("ERROR.CONNECTION_LOST: ", err);
+      handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
+};
+
+handleDisconnect();
 
 app.post("/webhook", line.middleware(config), (req, res) => {
   console.log(req.body.events);
