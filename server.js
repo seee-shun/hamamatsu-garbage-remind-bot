@@ -135,22 +135,22 @@ const handleEvent = async (e) => {
         if (err) throw err;
         console.log(results[0]);
 
-        connection.query(
-          "SELECT * FROM garbage_days WHERE day = ?",
-          tomorrow,
-          (error, vals) => {
-            if (error) throw error;
-            let mes = vals[0].results[0].livedArea;
-            if (mes == "undefined") {
-              mes = "なし";
-            }
-            client.pushMessage(e.source.userId, {
-              type: "text",
-              text: "明日のごみは" + mes + "です！",
-            });
-            console.log(vals);
-          }
-        );
+        // connection.query(
+        //   "SELECT * FROM garbage_days WHERE day = ?",
+        //   tomorrow,
+        //   (error, vals) => {
+        //     if (error) throw error;
+        //     let mes = vals[0].results[0].livedArea;
+        //     if (mes == "undefined") {
+        //       mes = "なし";
+        //     }
+        //     client.pushMessage(e.source.userId, {
+        //       type: "text",
+        //       text: "明日のごみは" + mes + "です！",
+        //     });
+        //     console.log(vals);
+        //   }
+        // );
       }
     );
   }
