@@ -54,7 +54,7 @@ app.post("/webhook", line.middleware(config), (req, res) => {
 const client = new line.Client(config);
 
 const handleEvent = async (e) => {
-  let mes = "桃尻かなえ";
+  let mes = "「今日のごみは？」と聞いてみてね！";
   const postalCodeCheck = /^[0-9]{3}-?[0-9]{4}$/;
 
   if (e.type !== "message" || e.message.type !== "text") {
