@@ -162,6 +162,7 @@ const handleEvent = async (e) => {
         );
       }
     );
+    return;
   }
 
   if (e.message.text === "地域を変更") {
