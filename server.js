@@ -122,11 +122,8 @@ const handleEvent = async (e) => {
   if (e.message.text === "明日のごみは？") {
     const time = new Date();
     let month = time.getMonth() + 1;
-    let day = time.getDate();
+    let day = time.getDate() + 1;
     let hour = time.getHours();
-    time.setDate(time.getDate() + 1);
-    month = time.getMonth() + 1;
-    day = time.getDate();
 
     // 日付整形
     const month_zero = ("00" + month).slice(-2);
@@ -139,30 +136,24 @@ const handleEvent = async (e) => {
         if (err) throw err;
         console.log(results[0]);
 
-        // クエリ文
-        const sql = "SELECT * FROM garbage_days WHERE day = ?";
-        connection.query(sql, tomorrow, (error, vals) => {
-          if (error) throw error;
-          let mes = vals[0].results[0].livedArea;
-          if (mes == "undefined") {
-            mes = "なし";
+        connection.query(
+          "SELECT * FROM garbage_days WHERE day = ?",
+          tomorrow,
+          (error, vals) => {
+            if (error) throw error;
+            let mes = vals[0].results[0].livedArea;
+            if (mes == "undefined") {
+              mes = "なし";
+            }
+            client.pushMessage(e.source.userId, {
+              type: "text",
+              text: "明日のごみは" + mes + "です！",
+            });
+            console.log(vals);
           }
-          client.pushMessage(e.source.userId, {
-            type: "text",
-            text: "明日のごみは" + mes + "です！",
-          });
-          console.log(vals);
-        });
+        );
       }
     );
-
-    connection.query(sql, tomorrow, (err, results) => {
-      console.log(results);
-      return client.pushMessage(e.source.userId, {
-        type: "text",
-        text: date,
-      });
-    });
   }
 
   if (e.message.text === "地域を変更") {
