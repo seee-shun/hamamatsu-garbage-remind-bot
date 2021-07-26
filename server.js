@@ -128,7 +128,7 @@ const handleEvent = async (e) => {
     let month = time.getMonth() + 1;
     let day = time.getDate();
 
-    if (e.message.text === "明日のゴミは") {
+    if (e.message.text === "明日のごみは？") {
       when = "明日";
       day = time.getDate() + 1;
     }
@@ -154,11 +154,10 @@ const handleEvent = async (e) => {
             if (mes === "") {
               mes = "なし";
             }
-            client.pushMessage(e.source.userId, {
+            return client.pushMessage(e.source.userId, {
               type: "text",
               text: `${when}のごみは${mes}です！`,
             });
-            console.log(vals);
           }
         );
       }
