@@ -142,7 +142,7 @@ const handleEvent = async (e) => {
             if (error) throw error;
             let mes = vals[0][results[0].livedArea];
             console.log(mes);
-            if (mes === "undefined") {
+            if (mes === "") {
               mes = "なし";
             }
             client.pushMessage(e.source.userId, {
