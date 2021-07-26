@@ -61,7 +61,7 @@ const handleEvent = async (e) => {
     return Promise.resolve(null);
   } else {
     connection.query(
-      `INSERT INTO users(userId) VALUES('${e.source.userId}')`,
+      `INSERT INTO users(userId) VALUES('${e.source.userId}') ON DUPLICATE KEY UPDATE userId = '${e.source.userId}'`,
       (err, results) => {
         if (err) throw err;
         console.log(results);
