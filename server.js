@@ -141,7 +141,8 @@ const handleEvent = async (e) => {
           (error, vals) => {
             if (error) throw error;
             let mes = vals[0][results[0].livedArea];
-            if (mes == "undefined") {
+            console.log(mes);
+            if (mes === "undefined") {
               mes = "なし";
             }
             client.pushMessage(e.source.userId, {
