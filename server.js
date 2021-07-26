@@ -59,17 +59,18 @@ const handleEvent = async (e) => {
 
   if (e.type !== "message" || e.message.type !== "text") {
     return Promise.resolve(null);
+  } else {
+    connection.query(
+      `INSERT INTO users(userId) VALUES('${e.source.userId}')`,
+      (err, results) => {
+        if (err) throw err;
+        console.log(results);
+      }
+    );
   }
   // if userId があるかチェック　もしないなら　users
 
   if (postalCodeCheck.test(e.message.text) === true) {
-    // connection.query(
-    //   `INSERT INTO users(userId) VALUES('${e.source.userId}')`,
-    //   (err, results) => {
-    //     if (err) throw err;
-    //     console.log(results);
-    //   }
-    // );
     try {
       const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
       const res = await axios.get(URL);
@@ -91,24 +92,6 @@ const handleEvent = async (e) => {
       return client.pushMessage(e.source.userId, {
         type: "text",
         text: `あなたの住む地域を${address}に設定しました！`,
-        // type: "template",
-        // altText: "this is a confirm template",
-        // template: {
-        //   type: "confirm",
-        //   text: `あなたの住む地域は${address}ですか？`,
-        //   actions: [
-        //     {
-        //       type: "message",
-        //       label: "はい",
-        //       text: "はい",
-        //     },
-        //     {
-        //       type: "message",
-        //       label: "いいえ",
-        //       text: "いいえ",
-        //     },
-        //   ],
-        // },
       });
     } catch (error) {
       console.log(`error:${error}`);
