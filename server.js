@@ -122,7 +122,7 @@ const handleEvent = async (e) => {
   if (e.message.text === "明日のごみは？") {
     let time = new Date();
     let month = time.getMonth() + 1;
-    let day = time.getDate() + 1;
+    let day = time.getDate() + 4;
 
     // 日付整形
     const month_zero = ("00" + month).slice(-2);
