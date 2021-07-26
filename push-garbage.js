@@ -51,9 +51,9 @@ const toMessage = () => {
   } else {
     // 前日（23時）のとき1日進める
     // console.log('23 oclock')
-    time.setDate(time.getDate() + 1);
+    // time.setDate(time.getDate() + 1);
     month = time.getMonth() + 1;
-    day = time.getDate();
+    day = time.getDate() + 1;
     str = "明日";
   }
 
