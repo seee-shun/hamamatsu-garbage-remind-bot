@@ -154,10 +154,11 @@ const handleEvent = async (e) => {
             if (mes === "") {
               mes = "なし";
             }
-            return client.pushMessage(e.source.userId, {
+            client.pushMessage(e.source.userId, {
               type: "text",
               text: `${when}のごみは${mes}です！`,
             });
+            break;
           }
         );
       }
