@@ -40,7 +40,7 @@ const client = new line.Client(config);
 
 const toMessage = () => {
   // 日付を取
-  const time = new Date();
+  let time = new Date();
   let month = time.getMonth() + 1;
   let day = time.getDate();
   let hour = time.getHours();
@@ -54,6 +54,7 @@ const toMessage = () => {
     // time.setDate(time.getDate() + 1);
     month = time.getMonth() + 1;
     day = time.getDate() + 1;
+    console.log(day);
     str = "明日";
   }
 
