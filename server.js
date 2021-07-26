@@ -119,10 +119,19 @@ const handleEvent = async (e) => {
     }
   }
 
-  if (e.message.text === "明日のごみは？") {
+  if (
+    e.message.text === "明日のごみは？" ||
+    e.message.text === "今日のごみは？"
+  ) {
+    let when = "今日";
     let time = new Date();
     let month = time.getMonth() + 1;
-    let day = time.getDate() + 1;
+    let day = time.getDate();
+
+    if (e.message.text === "明日のゴミは") {
+      when = "明日";
+      day = time.getDate() + 1;
+    }
 
     // 日付整形
     const month_zero = ("00" + month).slice(-2);
@@ -147,7 +156,7 @@ const handleEvent = async (e) => {
             }
             client.pushMessage(e.source.userId, {
               type: "text",
-              text: `明日のごみは${mes}です！`,
+              text: `${when}のごみは${mes}です！`,
             });
             console.log(vals);
           }
