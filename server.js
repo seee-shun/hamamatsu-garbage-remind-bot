@@ -72,7 +72,7 @@ const handleEvent = async (e) => {
   if (postalCodeCheck.test(e.message.text) === true) {
     try {
       const postalCodeURL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
-      const res = await axios.get(PostalCodeURL);
+      const res = await axios.get(postalCodeURL);
       const address = res.data.results[0].address3;
       connection.query(
         `SELECT garbage_number FROM cities WHERE name like '${address}%'`,
