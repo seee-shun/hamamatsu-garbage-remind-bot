@@ -68,12 +68,11 @@ const handleEvent = async (e) => {
       }
     );
   }
-  // if userId があるかチェック　もしないなら　users
 
   if (postalCodeCheck.test(e.message.text) === true) {
     try {
-      const URL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
-      const res = await axios.get(URL);
+      const postalCodeURL = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${e.message.text}`;
+      const res = await axios.get(PostalCodeURL);
       const address = res.data.results[0].address3;
       connection.query(
         `SELECT garbage_number FROM cities WHERE name like '${address}%'`,
@@ -116,7 +115,6 @@ const handleEvent = async (e) => {
       day = time.getDate() + 1;
     }
 
-    // 日付整形
     const month_zero = ("00" + month).slice(-2);
     const day_zero = ("00" + day).slice(-2);
     const tomorrow = "2021-" + month_zero + "-" + day_zero;
@@ -132,14 +130,13 @@ const handleEvent = async (e) => {
           tomorrow,
           (error, vals) => {
             if (error) throw error;
-            let mes = vals[0][results[0].livedArea];
-            console.log(mes);
-            if (mes === "") {
-              mes = "なし";
+            let garbage = vals[0][results[0].livedArea];
+            if (garbage === "") {
+              garbage = "なし";
             }
             return client.pushMessage(e.source.userId, {
               type: "text",
-              text: `${when}のごみは${mes}です！`,
+              text: `${when}のごみは${garbage}です！`,
             });
           }
         );
