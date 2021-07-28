@@ -3,8 +3,7 @@
 const express = require("express");
 const mysql = require("mysql");
 const line = require("@line/bot-sdk");
-// const PORT = process.env.PORT || 5000;
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 const config = {
   channelSecret: "356084186cc5e93d0d8f4b1c896",
@@ -44,18 +43,11 @@ const toMessage = () => {
   let month = time.getMonth() + 1;
   let day = time.getDate();
   let hour = time.getHours();
-  let str = "";
+  let when = "今日";
 
-  if (hour < 9) {
-    str = "今日";
-  } else {
-    // 前日（23時）のとき1日進める
-    // console.log('23 oclock')
-    // time.setDate(time.getDate() + 1);
-    month = time.getMonth() + 1;
+  if (hour > 9) {
     day = time.getDate() + 1;
-    console.log(day);
-    str = "明日";
+    when = "明日";
   }
 
   // 日付整形
@@ -66,22 +58,19 @@ const toMessage = () => {
   // クエリ文
   var sql = "SELECT * FROM users,garbage_days WHERE day = ?";
 
-  // connection.query("SELECT * FROM users,garbage where month = '" + month + "'", (err, results) => {
   connection.query(sql, today, (err, results) => {
-    // 取得した日付の居住区ごみ情報取得
-    // console.log(results.length)
-
-    // ユーザの居住区番号によって処理
+    // ユーザの居住区番号によって処理;
     for (let i = 0; i < results.length; i++) {
       // 居住地番号
       const livedArea = results[i].livedArea;
-      console.log(results);
-      console.log("live", livedArea);
-      console.log(results[i][livedArea]);
+      let garbage = results[i][livedArea];
+      if (garbage === "") {
+        garbage = "なし";
+      }
 
       client.pushMessage(results[i].userId, {
         type: "text",
-        text: str + "のごみは" + results[i][livedArea] + "です！",
+        text: `${when}のごみは${garbage}です！`,
       });
     }
   });
