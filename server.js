@@ -58,15 +58,14 @@ const handleEvent = async (e) => {
 
   if (e.type !== "message" || e.message.type !== "text") {
     return Promise.resolve(null);
+  } else {
+    connection.query(
+      `INSERT INTO users(userId) VALUES('${e.source.userId}') ON DUPLICATE KEY UPDATE userId = '${e.source.userId}'`,
+      (err, results) => {
+        if (err) throw err;
+      }
+    );
   }
-  // } else {
-  //   connection.query(
-  //     `INSERT INTO users(userId) VALUES('${e.source.userId}') ON DUPLICATE KEY UPDATE userId = '${e.source.userId}'`,
-  //     (err, results) => {
-  //       if (err) throw err;
-  //     }
-  //   );
-  // }
 
   if (postalCodeCheck.test(e.message.text) === true) {
     try {
@@ -130,6 +129,7 @@ const handleEvent = async (e) => {
             if (garbage === "") {
               garbage = "なし";
             }
+            console.log(garbage);
             return client.pushMessage(e.source.userId, {
               type: "text",
               text: `${when}のごみは${garbage}です！`,
