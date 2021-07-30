@@ -129,7 +129,9 @@ const handleEvent = async (e) => {
             if (garbage === "") {
               garbage = "なし";
             }
-            console.log(garbage);
+            console.log(
+              `${e.source.userId}さん、${when}のごみは${garbage}です！`
+            );
             return client.pushMessage(e.source.userId, {
               type: "text",
               text: `${when}のごみは${garbage}です！`,
