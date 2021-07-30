@@ -42,7 +42,6 @@ const toMessage = () => {
   let time = new Date();
   let month = time.getMonth() + 1;
   let day = time.getDate() + 1;
-  let hour = time.getHours();
   let when = "明日";
 
   // 日付整形
