@@ -64,7 +64,6 @@ const handleEvent = async (e) => {
       `INSERT INTO users(userId) VALUES('${e.source.userId}') ON DUPLICATE KEY UPDATE userId = '${e.source.userId}'`,
       (err, results) => {
         if (err) throw err;
-        console.log(results);
       }
     );
   }
@@ -78,12 +77,10 @@ const handleEvent = async (e) => {
         `SELECT garbage_number FROM cities WHERE name like '${address}%'`,
         (err, results) => {
           if (err) throw err;
-          console.log(results);
           connection.query(
             `UPDATE users SET livedArea = '${results[0].garbage_number}' WHERE userId = '${e.source.userId}'`,
             (error, vals) => {
               if (error) throw error;
-              console.log(vals);
             }
           );
         }
@@ -123,16 +120,13 @@ const handleEvent = async (e) => {
       `SELECT livedArea from users WHERE userId = '${e.source.userId}'`,
       (err, results) => {
         if (err) throw err;
-        console.log(`results0は${results[0]}`);
 
         connection.query(
           "SELECT * FROM garbage_days WHERE day = ?",
           tomorrow,
           (error, vals) => {
             if (error) throw error;
-            console.log(`vals[0]は${vals[0]}`);
             let garbage = vals[0][results[0].livedArea];
-            console.log(`garbageは${garbage}`);
             if (garbage === "") {
               garbage = "なし";
             }
