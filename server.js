@@ -131,6 +131,7 @@ const handleEvent = async (e) => {
           (error, vals) => {
             if (error) throw error;
             let garbage = vals[0][results[0].livedArea];
+            console.log(garbage);
             if (garbage === "") {
               garbage = "なし";
             }
