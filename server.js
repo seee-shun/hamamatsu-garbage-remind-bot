@@ -123,16 +123,16 @@ const handleEvent = async (e) => {
       `SELECT livedArea from users WHERE userId = '${e.source.userId}'`,
       (err, results) => {
         if (err) throw err;
-        console.log(results[0]);
+        console.log(`results0は${results[0]}`);
 
         connection.query(
           "SELECT * FROM garbage_days WHERE day = ?",
           tomorrow,
           (error, vals) => {
             if (error) throw error;
-            console.log(vals[0]);
+            console.log(`vals[0]は${vals[0]}`);
             let garbage = vals[0][results[0].livedArea];
-            console.log(garbage);
+            console.log(`garbageは${garbage}`);
             if (garbage === "") {
               garbage = "なし";
             }
