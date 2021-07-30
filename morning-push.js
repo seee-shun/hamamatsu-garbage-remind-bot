@@ -41,7 +41,7 @@ const toMessage = () => {
   // 日付を取
   let time = new Date();
   let month = time.getMonth() + 1;
-  let day = time.getDate();
+  let day = time.getDate() + 1;
   let when = "今日";
 
   // 日付整形
