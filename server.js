@@ -118,6 +118,7 @@ const handleEvent = async (e) => {
     const month_zero = ("00" + month).slice(-2);
     const day_zero = ("00" + day).slice(-2);
     const tomorrow = "2021-" + month_zero + "-" + day_zero;
+    console.log(e.source.userId);
 
     connection.query(
       `SELECT livedArea from users WHERE userId = '${e.source.userId}'`,
