@@ -46,7 +46,6 @@ handleDisconnect();
 app.post("/webhook", line.middleware(config), (req, res) => {
   console.log(req.body.events);
   Promise.all(req.body.events.map(handleEvent)).then((result) => {
-    console.log(result);
     res.json(result);
   });
 });
