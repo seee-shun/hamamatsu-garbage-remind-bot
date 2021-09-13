@@ -6,25 +6,17 @@ const line = require("@line/bot-sdk");
 const PORT = process.env.PORT || 5000;
 
 const config = {
-  channelSecret: "356084186cc5e93d0d8f4b1c896",
-  channelAccessToken:
-    "LBuTK2807CaJXrJ4Bkl6YnJ9/uOn/EPseaViFzNjt1ap5CgGy6pJSMwji9aUqQ6a/uDjrk372f8s8DjuvBHg2qAxVHu3vuX54x3oj8ZJEuPEUQVEpqkTmhW3y+G++z5uvymYMRt4tsK+eBKWVq0I4AdB04t89/1O/w1cDnyilFU=",
-  // channelSecret: process.env.CHANNEL_SECRET,
-  // channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
+  channelSecret: process.env.CHANNEL_SECRET,
+  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
 };
 
 const app = express();
 
 const connection = mysql.createConnection({
-  host: "us-cdbr-east-04.cleardb.com",
-  user: "b215f8f6b04092",
-  password: "0afba604",
-  database: "heroku_bb69fae61fac0c1",
-
-  // host: process.env.MYSQL_HOST,
-  // user: process.env.MYSQL_USER,
-  // password: process.env.MYSQL_PASSWORD,
-  // database: process.env.MYSQL_DATABASE,
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
 });
 
 connection.connect((err) => {
