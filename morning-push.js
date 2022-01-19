@@ -39,7 +39,7 @@ const toMessage = () => {
   // 日付整形
   const month_zero = ("00" + month).slice(-2);
   const day_zero = ("00" + day).slice(-2);
-  const today = "2021-" + month_zero + "-" + day_zero;
+  const today = "2022-" + month_zero + "-" + day_zero;
 
   // クエリ文
   var sql = "SELECT * FROM users,garbage_days WHERE day = ?";
