@@ -55,7 +55,7 @@ const toMessage = () => {
 
       client.pushMessage(results[i].userId, {
         type: "text",
-        text: `${when}のごみは${garbage}です！`,
+        text: `今日のごみは${garbage}です！`,
       });
     }
   });
