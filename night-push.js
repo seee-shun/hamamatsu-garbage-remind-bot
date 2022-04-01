@@ -44,8 +44,6 @@ const toMessage = () => {
   // クエリ文
   var sql = "SELECT * FROM users,garbage_days WHERE day = ?";
 
-  let when = "明日";
-
   connection.query(sql, tomorrowString, (err, results) => {
     // ユーザの居住区番号によって処理;
     for (let i = 0; i < results.length; i++) {
@@ -58,7 +56,7 @@ const toMessage = () => {
 
       client.pushMessage(results[i].userId, {
         type: "text",
-        text: `${when}のごみは${garbage}です！`,
+        text: `明日のごみは${garbage}です！`,
       });
     }
   });
