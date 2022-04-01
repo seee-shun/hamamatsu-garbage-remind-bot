@@ -105,18 +105,21 @@ const handleEvent = async (e) => {
     e.message.text === "今日のごみは？"
   ) {
     let when = "今日";
-    let time = new Date();
-    let month = time.getMonth() + 1;
-    let day = time.getDate();
+    let year, month, day;
+    const today = new Date();
+    year = today.getFullYear();
+    month = today.getMonth() + 1;
+    day = today.getDate();
 
     if (e.message.text === "明日のごみは？") {
       when = "明日";
-      day = time.getDate() + 1;
+      const tomorrow = new Date(today.setDate(today.getDate() + 1));
+      year = tomorrow.getFullYear();
+      month = tomorrow.getMonth() + 1;
+      day = tomorrow.getDate();
     }
-
-    const month_zero = ("00" + month).slice(-2);
-    const day_zero = ("00" + day).slice(-2);
-    const tomorrow = "2022-" + month_zero + "-" + day_zero;
+    const zeroPadding = (date) => date.toString().padStart(2, "0");
+    const dateQuery = `${year}-${zeroPadding(month)}-${zeroPadding(day)}`;
 
     connection.query(
       `SELECT livedArea from users WHERE userId = '${e.source.userId}'`,
@@ -125,7 +128,7 @@ const handleEvent = async (e) => {
 
         connection.query(
           "SELECT * FROM garbage_days WHERE day = ?",
-          tomorrow,
+          dateQuery,
           (error, vals) => {
             if (error) throw error;
             let garbage = vals[0][results[0].livedArea];

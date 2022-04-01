@@ -30,21 +30,20 @@ connection.connect((err) => {
 const client = new line.Client(config);
 
 const toMessage = () => {
-  // 日付を取
-  let time = new Date();
-  let month = time.getMonth() + 1;
-  let day = time.getDate() + 1;
-  let when = "今日";
+  //日付取得
+  const today = new Date();
 
   // 日付整形
-  const month_zero = ("00" + month).slice(-2);
-  const day_zero = ("00" + day).slice(-2);
-  const today = "2022-" + month_zero + "-" + day_zero;
+  const zeroPadding = (date) => date.toString().padStart(2, "0");
+  const todayYear = today.getFullYear();
+  const todayMonth = zeroPadding(today.getMonth() + 1);
+  const todayDay = zeroPadding(today.getDate());
+  const todayString = `${todayYear}-${todayMonth}-${todayDay}`;
 
   // クエリ文
   var sql = "SELECT * FROM users,garbage_days WHERE day = ?";
 
-  connection.query(sql, today, (err, results) => {
+  connection.query(sql, todayString, (err, results) => {
     // ユーザの居住区番号によって処理;
     for (let i = 0; i < results.length; i++) {
       // 居住地番号
@@ -56,7 +55,7 @@ const toMessage = () => {
 
       client.pushMessage(results[i].userId, {
         type: "text",
-        text: `${when}のごみは${garbage}です！`,
+        text: `今日のごみは${garbage}です！`,
       });
     }
   });
