@@ -36,9 +36,10 @@ const toMessage = () => {
 
   //日付整形
   const zeroPadding = (date) => date.toString().padStart(2, "0");
+  const tomorrowYear = tomorrow.getFullYear();
   const tomorrowMonth = zeroPadding(tomorrow.getMonth() + 1);
   const tomorrowDay = zeroPadding(tomorrow.getDate());
-  const tomorrowString = `2022-${tomorrowMonth}-${tomorrowDay}`;
+  const tomorrowString = `${tomorrowYear}-${tomorrowMonth}-${tomorrowDay}`;
 
   // クエリ文
   var sql = "SELECT * FROM users,garbage_days WHERE day = ?";
