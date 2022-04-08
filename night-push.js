@@ -32,6 +32,7 @@ const client = new line.Client(config);
 const toMessage = () => {
   //日付取得
   const today = new Date();
+  today.setHours(today.getHours() + 9);
   const tomorrow = new Date(today.setDate(today.getDate() + 1));
 
   //日付整形
