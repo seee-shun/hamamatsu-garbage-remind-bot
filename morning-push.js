@@ -32,6 +32,7 @@ const client = new line.Client(config);
 const toMessage = () => {
   //日付取得
   const today = new Date();
+  today.setHours(today.getHours() + 9);
 
   // 日付整形
   const zeroPadding = (date) => date.toString().padStart(2, "0");

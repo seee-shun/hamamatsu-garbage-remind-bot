@@ -107,6 +107,7 @@ const handleEvent = async (e) => {
     let when = "今日";
     let year, month, day;
     const today = new Date();
+    today.setHours(today.getHours() + 9);
     year = today.getFullYear();
     month = today.getMonth() + 1;
     day = today.getDate();
